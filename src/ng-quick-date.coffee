@@ -15,6 +15,7 @@ app.provider "ngQuickDateDefaults", ->
     options: {
       dateFormat: 'M/d/yyyy'
       timeFormat: 'h:mm a'
+      monthFormat: 'MM/yyyy'
       labelFormat: null
       placeholder: 'Click to Set Date'
       hoverText: null
@@ -22,6 +23,8 @@ app.provider "ngQuickDateDefaults", ->
       closeButtonHtml: '&times;'
       nextLinkHtml: 'Next &rarr;'
       prevLinkHtml: '&larr; Prev'
+      dateLabelHtml: 'Date'
+      timeLabelHtml: 'Time'
       disableTimepicker: false
       disableClearButton: false
       defaultTime: null
@@ -365,17 +368,17 @@ app.directive "quickDatepicker", ['ngQuickDateDefaults', '$filter', '$sce', (ngQ
                 <a href='' tabindex='-1' class='quickdate-close' ng-click='toggleCalendar()'><div ng-bind-html='closeButtonHtml'></div></a>
                 <div class='quickdate-text-inputs'>
                   <div class='quickdate-input-wrapper'>
-                    <label>Date</label>
+                    <label ng-bind-html='dateLabelHtml'></label>
                     <input class='quickdate-date-input' ng-class="{'ng-invalid': inputDateErr}" name='inputDate' type='text' ng-model='inputDate' placeholder='{{ datePlaceholder }}' ng-enter="selectDateFromInput(true)" ng-blur="selectDateFromInput(false)" on-tab='onDateInputTab()' />
                   </div>
                   <div class='quickdate-input-wrapper' ng-hide='disableTimepicker'>
-                    <label>Time</label>
+                    <label ng-bind-html='timeLabelHtml'></label>
                     <input class='quickdate-time-input' ng-class="{'ng-invalid': inputTimeErr}" name='inputTime' type='text' ng-model='inputTime' placeholder='{{ timePlaceholder }}' ng-enter="selectDateFromInput(true)" ng-blur="selectDateFromInput(false)" on-tab='onTimeInputTab()'>
                   </div>
                 </div>
                 <div class='quickdate-calendar-header'>
                   <a href='' class='quickdate-prev-month quickdate-action-link' tabindex='-1' ng-click='prevMonth()'><div ng-bind-html='prevLinkHtml'></div></a>
-                  <span class='quickdate-month'>{{calendarDate | date:'MMMM yyyy'}}</span>
+                  <span class='quickdate-month'>{{calendarDate | date:monthFormat}}</span>
                   <a href='' class='quickdate-next-month quickdate-action-link' ng-click='nextMonth()' tabindex='-1' ><div ng-bind-html='nextLinkHtml'></div></a>
                 </div>
                 <table class='quickdate-calendar'>
